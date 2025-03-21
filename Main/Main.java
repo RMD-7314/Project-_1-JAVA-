@@ -1,5 +1,9 @@
 package Main;
 
+import Accounts.AccountLauncher;
+import Bank;
+
+
 import java.util.Scanner;
 
 public class Main
@@ -11,8 +15,8 @@ public class Main
      * option variable in menus. Just use this instead. <br>
      * As to how to utilize Field objects properly, refer to the following:
      * 
-     * @see #prompt(String, boolean)
-     * @see #setOption() How Field objects are used.
+     * @see #//prompt(String, boolean)
+     * @see #//setOption() How Field objects are used.
      */
     public static Field<Integer, Integer> option = new Field<Integer, Integer>("Option",
             Integer.class, -1, new Field.IntegerFieldValidator());
@@ -30,16 +34,52 @@ public class Main
                 // READ ME: Refer to this code block on how one should properly utilize
                 // showMenuHeader(), showMenu(),
                 // setOption(), and getOption() methods...
-                showMenuHeader("Account Login Menu");
-                showMenu(2, 1);
-                setOption();
-                showMenu(getOption(), 1);
+                // showMenuHeader("Account Login Menu");
+                // showMenu(2, 1);
+                // setOption();
+                // showMenu(getOption(), 1);
+                boolean isAccountsLogin = true;
+                while(isAccountsLogin){
+                    showMenuHeader("Account Login Menu");
+                    showMenu(2, 1);
+                    setOption();
+                    if(getOption()==1){
+                        // Accounts Launchers
+                        try{
+                            AccountLauncher.accountLogin();
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(getOption()==2){
+                        // Go back
+                        isAccountsLogin = false;
+                    }
+                    else{
+                        // Invalid Option chosen
+                        System.out.println("Invalid Option!");
+                    }
+                }
                 // TODO: Complete this portion
+
             }
             // Bank Option
             else if (getOption() == 2)
             {
                 // TODO: Complete Bank option
+                showMenuHeader("Bank Login Menu");
+                showMenu(3, 1);
+                setOption();
+                if(getOption()==1){
+                    BankLauncher.bankLogin();
+                }
+                else if(getOption()==2){
+                    //continues
+                }
+                else{
+                    System.out.println("Invalid option!");
+                }
+            }
             }
             // Create New Bank
             else if (getOption() == 3)
