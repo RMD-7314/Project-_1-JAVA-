@@ -85,6 +85,8 @@ public class Main
             else if (getOption() == 3)
             {
                 // TODO: Complete this portion...
+                BankLauncher.createNewBank();
+            
             }
             else if (getOption() == 4)
             {
