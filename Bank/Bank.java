@@ -132,7 +132,7 @@ public class Bank {
     public Account getBankAccount(Bank bank, String accountNum) {
         Account acc = null;
         for (Account account : bank.getBANKACCOUNTS()) {
-            if (account.getACCOUNTNUMBER().equals(accountNum)) {
+            if (account.getAccountNumber().equals(accountNum)) {
                 acc = account;
             }
         }
@@ -225,17 +225,17 @@ public class Bank {
     }
 
     public void addNewAccount(Account account) {
-        if (!accountExists(this, account.getACCOUNTNUMBER())) {
+        if (!accountExists(this, account.getAccountNumber())) {
             this.getBANKACCOUNTS().add(account);
         } else {
-            System.out.println("Account with account#" + account.getACCOUNTNUMBER()
+            System.out.println("Account with account#" + account.getAccountNumber()
                     + " already exists! \n=====Account Creation Aborted!=====");
         }
     }
 
     public static boolean accountExists(Bank bank, String accountNum) {
         for (Account account : bank.getBANKACCOUNTS()) {
-            if (account.getACCOUNTNUMBER().equals(accountNum)) {
+            if (account.getAccountNumber().equals(accountNum)) {
                 return true; // Account exists
             }
         }
