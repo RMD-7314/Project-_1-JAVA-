@@ -8,7 +8,8 @@ public class CreditAccountLauncher extends AccountLauncher {
 
     /**
      * Method that deals with all things about credit accounts.
-     * Mainly utilized for showing the main menu after Credit Account users log in to the application.
+     * Mainly utilized for showing the main menu after Credit Account users log in
+     * to the application.
      */
     public static void creditAccountInit() throws IllegalAccountType {
         boolean isInCreditAccount = true;
@@ -45,16 +46,17 @@ public class CreditAccountLauncher extends AccountLauncher {
     }
 
     /**
-     * Displays the credit details, including available credits, credit limit, and transaction history.
+     * Displays the credit details, including available credits, credit limit, and
+     * transaction history.
      */
     private static void showCreditDetails() {
         char currencyUsed = '$';
         String loanStatement = getLoggedAccount().getLoanStatement();
         double loanAmount = Double.parseDouble(loanStatement.substring(loanStatement.indexOf(currencyUsed) + 1));
-        double availableCredits = getLoggedAccount().getBank().getCreditLimit() - loanAmount;
+        double availableCredits = getLoggedAccount().getBANK().getCreditLimit() - loanAmount;
 
         System.out.println("Available Credits: " + availableCredits);
-        System.out.println("Credit Limit: " + getLoggedAccount().getBank().getCreditLimit());
+        System.out.println("Credit Limit: " + getLoggedAccount().getBANK().getCreditLimit());
         System.out.println("Transactions using Credit: \n" + getLoggedAccount().getTransactionsInfo());
     }
 
@@ -62,7 +64,8 @@ public class CreditAccountLauncher extends AccountLauncher {
      * Processes the credit payment transaction.
      */
     private static void creditPaymentProcess() throws IllegalAccountType {
-        Field<String, Integer> accountNumber = new Field<>("Account Number", String.class, 0, new Field.StringFieldLengthValidator());
+        Field<String, Integer> accountNumber = new Field<>("Account Number", String.class, 0,
+                new Field.StringFieldLengthValidator());
         accountNumber.setFieldValue("Enter Account Number: ");
         String accountNum = accountNumber.getFieldValue();
 
