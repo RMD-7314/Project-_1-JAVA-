@@ -13,7 +13,8 @@ public abstract class Account {
     private String pin;
     private final ArrayList<Transaction> transactions;
 
-    public Account(Bank bank, String accountNumber, String ownerFirstName, String ownerLastName, String ownerEmail, String pin) {
+    public Account(Bank bank, String accountNumber, String ownerFirstName, String ownerLastName, String ownerEmail,
+            String pin) {
         this.bank = bank;
         this.accountNumber = accountNumber;
         this.ownerFirstName = ownerFirstName;
@@ -53,11 +54,10 @@ public abstract class Account {
 
     protected String generateTransactionDescription(Account sender, Account receiver, double amount) {
         return String.format(
-            "Sender: %s | Amount: %.2f | Recipient Bank: %s",
-            sender.getAccountNumber(),
-            amount,
-            receiver.getBank().getBankName()
-        );
+                "Sender: %s | Amount: %.2f | Recipient Bank: %s",
+                sender.getAccountNumber(),
+                amount,
+                receiver.getBank().getName());
     }
 
     public void addTransaction(Transaction transaction) {
@@ -67,15 +67,14 @@ public abstract class Account {
     @Override
     public String toString() {
         return String.format(
-            "Account Number: %s\n" +
-            "Owner: %s %s\n" +
-            "Email: %s\n" +
-            "Bank: %s\n",
-            this.accountNumber,
-            this.ownerFirstName,
-            this.ownerLastName,
-            this.ownerEmail,
-            this.bank.getBankName()
-        );
+                "Account Number: %s\n" +
+                        "Owner: %s %s\n" +
+                        "Email: %s\n" +
+                        "Bank: %s\n",
+                this.accountNumber,
+                this.ownerFirstName,
+                this.ownerLastName,
+                this.ownerEmail,
+                this.bank.getName());
     }
 }
