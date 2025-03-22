@@ -23,9 +23,7 @@ public class Main
         Integer.class,
         -1,
         new Field.IntegerFieldValidator()
-);
-
-
+    );
     public static void main(String[] args)
     {
         while (true)
