@@ -132,7 +132,7 @@ public class Bank {
     public Account getBankAccount(Bank bank, String accountNum) {
         Account acc = null;
         for (Account account : bank.getBANKACCOUNTS()) {
-            if (account.getACCOUNTNUMBER().equals(accountNum)) {
+            if (account.getAccountNumber().equals(accountNum)) {
                 acc = account;
             }
         }
