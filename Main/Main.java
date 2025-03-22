@@ -18,9 +18,12 @@ public class Main
      * @see #prompt(String, boolean)
      * @see #setOption() How Field objects are used.
      */
-    public static Field<Integer, Integer> option = new Field<Integer, Integer>("Option",
-            Integer.class, -1, new Field.IntegerFieldValidator());
-
+    public static Field<Integer, Integer> option = new Field<>(
+        "Option",
+        Integer.class,
+        -1,
+        new Field.IntegerFieldValidator()
+    );
     public static void main(String[] args)
     {
         while (true)
