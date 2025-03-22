@@ -261,7 +261,7 @@ public class Bank {
 
     public static class BankComparator implements Comparator<Bank>{
         //A comparator that compares if two bank objects are the same.
-        @Override
+        @OverridegetAccounts
         public int compare(Bank b1, Bank b2) {
             if(b1.getID()!=b2.getID()){
                 return 1;
