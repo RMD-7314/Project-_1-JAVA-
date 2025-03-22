@@ -64,26 +64,21 @@ public class Main
 
             }
             // Bank Option
-            else if (getOption() == 2)
-            {
+            else if (getOption() == 2) {
                 // TODO: Complete Bank option
                 showMenuHeader("Bank Login Menu");
                 showMenu(3, 1);
                 setOption();
-                if(getOption()==1){
+                if (getOption() == 1) {
                     BankLauncher.bankLogin();
-                }
-                else if(getOption()==2){
+                } else if (getOption() == 2) {
                     //continues
-                }
-                else{
+                } else {
                     System.out.println("Invalid option!");
                 }
             }
-            }
             // Create New Bank
-            else if (getOption() == 3)
-            {
+            else if (getOption() == 3) {
                 // TODO: Complete this portion...
                 BankLauncher.createNewBank();
             
