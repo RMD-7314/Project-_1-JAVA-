@@ -41,9 +41,72 @@ public class SavingsAccountLauncher extends AccountLauncher {
                     break;
             }
         }
+
+
+
+
+//        Scanner scanner = new Scanner(System.in);
+//        AccountLauncher accountLauncher = new AccountLauncher();
+//
+//        //attempt to login if no account is currently login
+//        if (loggedAccount == null) {
+//            loggedAccount = (SavingsAccount) accountLauncher.checkCredentials();
+//        }
+//
+//        //handles login failure
+//        if (loggedAccount == null) {
+//            System.out.println("Login unsuccessful. Returning to the main menu...");
+//            return;
+//        }
+//
+//        System.out.println("Login successful! Welcome, " + loggedAccount.getOWNERFNAME());
+//
+//        while (true) {
+//            displayMenu();
+//
+//            try {
+//                int choice = scanner.nextInt();
+//
+//                switch (choice) {
+//                    case 1:
+//                        depositProcess();
+//                        break;
+//                    case 2:
+//                        withdrawProcess();
+//                        break;
+//                    case 3:
+//                        fundTransferProcess(accountLauncher);
+//                        break;
+//                    case 4:
+//                        System.out.println("Logging out...");
+//                        loggedAccount = null;
+//                        return;
+//                    case 5:
+//                        System.out.println("Exiting savings account menu...");
+//                        return;
+//                    default:
+//                        System.out.println("Invalid choice. Please choose again");
+//                        break;
+//                }
+//            } catch (Exception e) {
+//                System.out.println("Invalid input. Please enter a number: ");
+//                scanner.nextLine();
+//            }
+//        }
     }
 
-     /**
+//    private static void displayMenu() {
+//        System.out.println("\nSavings Account Menu");
+//        System.out.println("1. Deposit");
+//        System.out.println("2. Withdraw");
+//        System.out.println("3. Fund Transfer");
+//        System.out.println("4. Logout");
+//        System.out.println("5. Exit");
+//
+//        System.out.print("Enter your choice: ");
+//    }
+
+    /**
      * A method that deals with the deposit process transaction.
      * allows user to deposit any amount they enter as long as the deposit amount is greater than 0 and valid
      */
@@ -59,6 +122,67 @@ public class SavingsAccountLauncher extends AccountLauncher {
         else{
             System.out.println("Deposit failed. Deposit amount must not be greater than Bank Deposit Limit.");
         }
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.print("Enter amount to deposit: ");
+//        try {
+//            double amount = scanner.nextDouble();
+//
+//            //validate deposit amount
+//            if (amount <= 0) {
+//                System.out.println("Deposit amount must be greater than zero.");
+//                return;
+//            }
+//
+//
+//            if (loggedAccount.cashDeposit(amount)) {
+//                System.out.println("Deposited successfully.");
+//                System.out.println("New balance: " + loggedAccount.getAccountBalanceStatement());
+//            } else {
+//                System.out.println("Deposit failed. Try again");
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Invalid input. Please enter a valid amount.");
+//            scanner.nextLine();
+//        }
+    }
+
+
+    /**
+     * A method that deals with the withdrawal process transaction.
+     */
+    private static void withdrawProcess() {
+        Field<Double, Double> amount = new Field<Double, Double>("Amount", Double.class, 0.0, new Field.DoubleFieldValidator());
+        amount.setFieldValue("Enter amount to withdraw: ");
+        double amountFieldValue = amount.getFieldValue();
+
+        if(getLoggedAccount().withdrawal(amountFieldValue)){
+            System.out.println("Withdrew successfully.");
+            System.out.println("Remaining balance: " + getLoggedAccount().getAccountBalanceStatement());
+        }
+        else{
+            System.out.println("Insufficient balance. Withdrawal failed");
+        }
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.print("Enter amount to withdraw: ");
+//        try {
+//            double amount = scanner.nextDouble();
+//
+//            if (amount <= 0) {
+//                System.out.println("Withdrawal must be greater than zero.");
+//            }
+//
+//            if (loggedAccount.withdrawal(amount)) {
+//                System.out.println("Withdrew successfully.");
+//                System.out.println("Remaining balance: " + loggedAccount.getAccountBalanceStatement());
+//            } else {
+//                System.out.println("Insufficient balance. Withdrawal failed");
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Invalid input. Please input a valid amount.");
+//            scanner.nextLine();
+//        }
     }
 
     /**
@@ -135,16 +259,55 @@ public class SavingsAccountLauncher extends AccountLauncher {
                     break;
             }
         }
+
+//        Scanner scanner = new Scanner(System.in);
+//
+//        try {
+//            System.out.println("Enter recipient account number: ");
+//            String recipientNumber = scanner.next();
+//
+//            //verifies recipient account
+//            recipientAccount = (SavingsAccount) accountLauncher.checkCredentials();
+//            if (recipientAccount == null || !recipientAccount.getACCOUNTNUMBER().equals(recipientNumber)) {
+//                System.out.println("Recipient account or account number not found.");
+//                return;
+//            }
+//
+//            System.out.println("Enter amount to transfer: ");
+//            double amount = scanner.nextDouble();
+//
+//            if (amount <= 0) {
+//                System.out.println("Transfer amount must be greater than zero.");
+//                return;
+//            }
+//
+//            double processingFee = loggedAccount.getBANK().getProcessingFee();
+//            double totalamount = amount - processingFee;
+//
+//            if (loggedAccount.transfer(loggedAccount.getBANK(), recipientAccount, totalamount)) {
+//                System.out.println("Transfer successful.");
+//                System.out.println("Transferred amount: " + totalamount);
+//                System.out.println("Processing fee: " + processingFee);
+//                System.out.println("New balance: " + loggedAccount.getAccountBalanceStatement());
+//            } else {
+//                System.out.println("Transfer failed.");
+//            }
+//        } catch (IllegalAccountType e) {
+//            System.out.println(e.getMessage());
+//        } catch (Exception e) {
+//            System.out.println("Invalid input. Please enter a valid amount.");
+//            scanner.nextLine();
+//        }
     }
 
-     /**
+    /**
      * Get the Savings Account instance of the currently logged in account.
      *
      * @return null if no account is currently logged in
      */
 
-     protected static SavingsAccount getLoggedAccount() {
+    protected static SavingsAccount getLoggedAccount() {
         return (SavingsAccount) AccountLauncher.getLoggedAccount();
     }
+}
 
-} 

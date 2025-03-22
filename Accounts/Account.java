@@ -1,80 +1,102 @@
 package Accounts;
-
 import Bank.Bank;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class Account {
-    private final Bank bank;
-    private final String accountNumber;
-    private final String ownerFirstName;
-    private final String ownerLastName;
-    private final String ownerEmail;
+    private final Bank BANK;
+    private final String ACCOUNTNUMBER;
+    private final String OWNERFNAME,OWNERLNAME,OWNEREMAIL;
     private String pin;
-    private final ArrayList<Transaction> transactions;
+    private final ArrayList<Transaction> TRANSACTIONS;
 
-    public Account(Bank bank, String accountNumber, String ownerFirstName, String ownerLastName, String ownerEmail,
-            String pin) {
-        this.bank = bank;
-        this.accountNumber = accountNumber;
-        this.ownerFirstName = ownerFirstName;
-        this.ownerLastName = ownerLastName;
-        this.ownerEmail = ownerEmail;
+    public Account(Bank bank, String ACCOUNTNUMBER, String OWNERFNAME,String OWNERLNAME,String OWNEREMAIL, String pin) {
+        this.BANK = bank;
+        this.ACCOUNTNUMBER = ACCOUNTNUMBER;
+        this.OWNERFNAME = OWNERFNAME;
+        this.OWNERLNAME = OWNERLNAME;
+        this.OWNEREMAIL = OWNEREMAIL;
         this.pin = pin;
-        this.transactions = new ArrayList<>();
+        this.TRANSACTIONS = new ArrayList<>();
     }
 
-    public Bank getBank() {
-        return this.bank;
+    public Bank getBANK() {
+        return this.BANK;
     }
 
-    public String getAccountNumber() {
-        return this.accountNumber;
+    public String getACCOUNTNUMBER() {
+        return this.ACCOUNTNUMBER;
     }
 
-    public String getOwnerFirstName() {
-        return this.ownerFirstName;
+    public String getOWNERFNAME() {
+        return this.OWNERFNAME;
     }
 
-    public String getOwnerLastName() {
-        return this.ownerLastName;
+    public String getOWNERLNAME() {
+        return this.OWNERLNAME;
     }
 
     public String getOwnerEmail() {
-        return this.ownerEmail;
+        return this.OWNEREMAIL;
     }
 
     public String getPin() {
         return this.pin;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return this.transactions;
+    public ArrayList<Transaction> getTRANSACTIONS() {
+        return this.TRANSACTIONS;
     }
 
-    protected String generateTransactionDescription(Account sender, Account receiver, double amount) {
+    protected String transactionDescription(Account accountSender, Account accountReceiver, double amount){
+        // Which account money was transferred from?
+        // amount of money?
+        // which bank? (bank name) the recipient account was registered from
+        // same whether external or internal fund transfer
+        return String.format("Sender: " + accountReceiver.getACCOUNTNUMBER() + " " +
+                "Amount: " + amount + " " +
+                "Recipient Bank: " + accountReceiver.getBANK().getName() +
+                ""
+                );
+    }
+
+
+
+    public String getOwnerFullName(){
+        return this.getOWNERFNAME() + " " + this.getOWNERLNAME();
+    }
+    public void addNewTransaction(String AccountNum, Transaction.Transactions transactionType, String transactionDescription){
+        Transaction newTransaction = new Transaction(AccountNum, transactionType, transactionDescription);
+        TRANSACTIONS.add(newTransaction);
+    }
+
+    public String getTransactionsInfo(){
+        StringBuilder transactionsInfo = new StringBuilder();
+        if (TRANSACTIONS.isEmpty()) {
+            transactionsInfo.append("No transactions found.\n");
+        } else {
+            for (Transaction transaction : TRANSACTIONS) {
+                transactionsInfo.append("===Type: ").append(transaction.transactionType).append("===");
+                transactionsInfo.append("===Description: ").append(transaction.description).append("===\n");
+            }
+        }
+        return transactionsInfo.toString();
+    }
+
+    public String toString()
+    {
+        /**Account Number;
+         * Account Name;
+         * Email;
+         */
         return String.format(
-                "Sender: %s | Amount: %.2f | Recipient Bank: %s",
-                sender.getAccountNumber(),
-                amount,
-                receiver.getBank().getName());
+                        "  Account Number: %s\n" +
+                        "  Account Name: %s\n" +
+                        "  Email: %s\n"
+                        ,
+                this.getACCOUNTNUMBER(),
+                this.getOwnerFullName(),
+                this.getOwnerEmail()
+        );
     }
 
-    public void addTransaction(Transaction transaction) {
-        this.transactions.add(transaction);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Account Number: %s\n" +
-                        "Owner: %s %s\n" +
-                        "Email: %s\n" +
-                        "Bank: %s\n",
-                this.accountNumber,
-                this.ownerFirstName,
-                this.ownerLastName,
-                this.ownerEmail,
-                this.bank.getName());
-    }
 }

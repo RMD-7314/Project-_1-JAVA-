@@ -38,6 +38,7 @@ public class Main
 //                showMenu(2, 1);
 //                setOption();
 //                showMenu(getOption(), 1);
+                // TODO: Complete this portion
                 boolean isAccountsLogin = true;
                 while(isAccountsLogin){
                     showMenuHeader("Account Login Menu");
@@ -60,7 +61,7 @@ public class Main
                         System.out.println("Invalid Option!");
                     }
                 }
-                // TODO: Complete this portion
+        
             }
             // Bank Option
             else if (getOption() == 2)
