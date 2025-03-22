@@ -1,5 +1,4 @@
 package Accounts;
-
 import Bank.BankLauncher;
 import Main.Main;
 import Main.Field;
@@ -8,33 +7,33 @@ public class CreditAccountLauncher extends AccountLauncher {
 
     /**
      * Method that deals with all things about credit accounts.
-     * Mainly utilized for showing the main menu after Credit Account users log in
-     * to the application.
+     * Mainly utilized for showing the main menu after Credit Account users log in to the application.
      */
     public static void creditAccountInit() throws IllegalAccountType {
+        // "Show Credits", "Pay", "Recompense", "Show Transactions", "Logout"
         boolean isInCreditAccount = true;
-        while (isInCreditAccount) {
-            Main.showMenu(41); // Show the credit account menu
+        while(isInCreditAccount){
+            Main.showMenu(41);
             Main.setOption();
-            switch (Main.getOption()) {
+            switch(Main.getOption()){
                 case 1:
-                    // Show credits
-                    showCreditDetails();
+                    // show credits
+                    char currencyUsed = '$';
+                    double loanAmount = Double.parseDouble( getLoggedAccount().getLoanStatement().substring(getLoggedAccount().getLoanStatement().indexOf(currencyUsed)+1, getLoggedAccount().getLoanStatement().length()));
+                    System.out.println("Available Credits: " + (getLoggedAccount().getBANK().getCreditLimit() - loanAmount));
+                    System.out.println("Credit Limit: " + getLoggedAccount().getBANK().getCreditLimit());
+                    System.out.println("Transactions using Credit: \n" + getLoggedAccount().getTransactionsInfo());
                     break;
                 case 2:
-                    // Process credit payment
-                    creditPaymentProcess();
+                    creditPaymentProcess(); // process the credit payment transaction
                     break;
                 case 3:
-                    // Process credit recompense
-                    creditRecompenseProcess();
+                    creditRecompenseProcess(); // process the credit recompense transaction
                     break;
                 case 4:
-                    // Show transaction history
                     System.out.println(getLoggedAccount().getTransactionsInfo());
                     break;
                 case 5:
-                    // Logout
                     System.out.println("Logging out...");
                     isInCreditAccount = false;
                     break;
@@ -43,70 +42,42 @@ public class CreditAccountLauncher extends AccountLauncher {
                     break;
             }
         }
+
+
+    //closing part of the method
     }
 
     /**
-     * Displays the credit details, including available credits, credit limit, and
-     * transaction history.
-     */
-    private static void showCreditDetails() {
-        char currencyUsed = '$';
-        String loanStatement = getLoggedAccount().getLoanStatement();
-        double loanAmount = Double.parseDouble(loanStatement.substring(loanStatement.indexOf(currencyUsed) + 1));
-        double availableCredits = getLoggedAccount().getBANK().getCreditLimit() - loanAmount;
-
-        System.out.println("Available Credits: " + availableCredits);
-        System.out.println("Credit Limit: " + getLoggedAccount().getBANK().getCreditLimit());
-        System.out.println("Transactions using Credit: \n" + getLoggedAccount().getTransactionsInfo());
-    }
-
-    /**
-     * Processes the credit payment transaction.
+     * Method that is utilized to process the credit payment transaction.
      */
     private static void creditPaymentProcess() throws IllegalAccountType {
-        Field<String, Integer> accountNumber = new Field<>("Account Number", String.class, 0,
-                new Field.StringFieldLengthValidator());
+        Field<String, Integer> accountNumber = new Field<String,Integer>("ACCOUNTNUMBER",String.class,0, new Field.StringFieldLengthValidator());
         accountNumber.setFieldValue("Enter Account Number: ");
         String accountNum = accountNumber.getFieldValue();
-
-        Account targetAccount = BankLauncher.findAccount(accountNum);
-        if (targetAccount == null) {
-            System.out.println("Account not found!");
-            return;
-        }
-
-        Field<Double, Double> amount = new Field<>("Amount", Double.class, 0.00, new Field.DoubleFieldValidator());
+        Account acc = BankLauncher.findAccount(accountNum);
+        Field<Integer, Integer> amount = new Field<Integer, Integer>("Amount", Integer.class, 0, new Field.IntegerFieldValidator());
         amount.setFieldValue("Enter Amount: ");
-        double paymentAmount = amount.getFieldValue();
+        double amountFieldValue = amount.getFieldValue();
 
-        if (getLoggedAccount().pay(targetAccount, paymentAmount)) {
+        if(getLoggedAccount().pay(acc, amountFieldValue) == true){
             System.out.println("Payment Successful!");
-        } else {
-            System.out.println("Payment Failed! Account must be of Savings Account type.");
         }
+        else{
+            System.out.println("Payment Failed! Account Must be of Savings Account type");
+        }
+
     }
 
     /**
-     * Processes the credit recompense transaction.
+     * Method that is utilized to process the credit compensation transaction.
      */
     private static void creditRecompenseProcess() {
-        Field<Double, Double> amount = new Field<>("Amount", Double.class, 0.00, new Field.DoubleFieldValidator());
+        Field<Double, Double> amount = new Field<Double, Double>("Amount", Double.class, 0.00, new Field.DoubleFieldValidator());
         amount.setFieldValue("Enter Amount: ");
-        double recompenseAmount = amount.getFieldValue();
-
-        if (getLoggedAccount().recompense(recompenseAmount)) {
-            System.out.println("Recompense Successful!");
-        } else {
-            System.out.println("Recompense Failed! Amount must not exceed the current loan.");
-        }
+        getLoggedAccount().recompense(amount.getFieldValue());
     }
 
-    /**
-     * Gets the currently logged-in CreditAccount.
-     *
-     * @return The logged-in CreditAccount object.
-     */
-    protected static CreditAccount getLoggedAccount() {
-        return (CreditAccount) AccountLauncher.getLoggedAccount();
+    protected static CreditAccount getLoggedAccount(){
+        return (CreditAccount)AccountLauncher.getLoggedAccount();
     }
 }
